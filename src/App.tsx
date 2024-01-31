@@ -1,7 +1,10 @@
+import { HomePage } from "@/components/templates/home";
+
+
 export default function App() {
   return (
     <>
-      <h1>Hello World</h1>
+      <HomePage></HomePage>
     </>
   )
 }
