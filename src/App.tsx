@@ -1,10 +1,11 @@
-import { HomePage } from "@/components/templates/home";
+import { AppRoutes } from "@/routes";
+
 
 
 export default function App() {
   return (
     <>
-      <HomePage></HomePage>
+      <AppRoutes />
     </>
   )
 }
