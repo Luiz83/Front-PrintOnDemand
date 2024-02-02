@@ -10,7 +10,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
 export function Sidebar({ className }: SidebarProps) {
     return (
         <div className={cn("md:pb-12", className)}>
-            <div className="md:space-y-4 md:py-1 h-full">
+            <div className="md:space-y-4 md:py-1 h-auto ">
                 <div className="px-3 py-2 my-auto flex item-center md:block">
                     <div className="flex flex-col justify-center md:block">
                         <p className="text-2xl px-4 md:mb-2 text-center">
