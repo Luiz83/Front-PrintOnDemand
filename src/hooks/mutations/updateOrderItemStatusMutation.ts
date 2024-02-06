@@ -1,12 +1,12 @@
 import axiosClient from "@/services/AxiosClient"
 import { useMutation, useQueryClient } from "react-query"
 
-export function useUpdateOrderItemMutation() {
+export function useUpdateOrderItemStatusMutation() {
 
     const queryClient = useQueryClient()
 
     return useMutation(
-        (params: {id: string, quantity: string}) => axiosClient.put('/Events/orderItems/update', null, { params }),
+        (params: {id: string}) => axiosClient.put('/Events/orderItems/status', null, { params }),
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('items')

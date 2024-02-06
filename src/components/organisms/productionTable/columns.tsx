@@ -51,13 +51,14 @@ export const columns: ColumnDef<Items>[] = [
         header: () => <div className="text-center">Status</div>,
         cell: ({ row }) => {
             const item = row.original
-
+            const color = item.status == "Production" ? "bg-sky-600" : "bg-amber-600"
             return (
                 <div className="flex justify-center">
-                    <Badge className="bg-sky-600">{item.status}</Badge>
+                    <Badge className={color}>{item.status}</Badge>
                 </div>
             )
-        }
+        },
+        
     },
     {
         accessorKey: "actions",
@@ -80,8 +81,8 @@ export const columns: ColumnDef<Items>[] = [
                                     Link do Gabarito
                                     <Copy className="ml-2 h-4 w-4" />
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>Marcar em produção</DropdownMenuItem>
                                 <DropdownMenuSeparator />
+                                <DropdownMenuItem>Marcar em produção</DropdownMenuItem>
                                 <DialogTrigger asChild>
                                     <DropdownMenuItem>
                                         Dar Baixa

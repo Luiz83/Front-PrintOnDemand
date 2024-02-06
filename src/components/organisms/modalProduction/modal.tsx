@@ -44,7 +44,7 @@ export function ModalUpdateProduct({ itemId, children }: Props) {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button onClick={() => mutate({ itemId, quantity })}>Atualizar</Button>
+                        <Button onClick={() => mutate({ id: itemId, quantity })}>Atualizar</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog >

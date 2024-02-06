@@ -1,6 +1,5 @@
 import { Sidebar } from "@/components/organisms/sidebar";
 import { ProductionTable } from "../organisms/productionTable/data-table";
-import { columns } from "../organisms/productionTable/columns";
 import axiosClient from "@/services/AxiosClient";
 import { useQuery } from "react-query";
 
@@ -17,7 +16,7 @@ export function DashboardPage() {
                             <div className="min-h-svh md:col-span-3  lg:col-span-4 lg:border-l bg-zinc-200 overflow-auto">
                                 <div className="w-4/5 mx-auto">
                                     <div className="container pt-10 mx-auto ">
-                                        {isLoading ? <p>Carregando</p> : <ProductionTable columns={columns} data={data} />}
+                                        {isLoading ? <p>Carregando</p> : <ProductionTable data={data} />}
                                     </div>
                                 </div>
                             </div>
