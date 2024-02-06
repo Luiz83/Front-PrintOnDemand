@@ -7,6 +7,7 @@ import axiosClient from "@/services/AxiosClient";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { Items } from "../productionTable/columns";
+import { useUpdateOrderItemMutation } from "@/hooks/mutations/updateOrderItemMutation";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     itemId: string
@@ -16,15 +17,7 @@ export function ModalUpdateProduct({ itemId, children }: Props) {
 
     const [quantity, setQuantity] = useState("0")
 
-    const queryClient = useQueryClient()
-
-    const { isLoading, mutate } = useMutation(
-        () => axiosClient.put('/Events/orderItems/update', null, { params: { id: itemId, quantity: quantity } }),
-        {
-            onSuccess: () =>{
-                queryClient.invalidateQueries('items')
-            }
-        })
+    const { isLoading, mutate } = useUpdateOrderItemMutation()
 
     return (
         <>
@@ -51,7 +44,7 @@ export function ModalUpdateProduct({ itemId, children }: Props) {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button onClick={() => mutate()}>Atualizar</Button>
+                        <Button onClick={() => mutate({ itemId, quantity })}>Atualizar</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog >
