@@ -23,16 +23,22 @@ export function ModalUpdateProduct({ itemId, children }: Props) {
     const [quantity, setQuantity] = useState("0")
     const [missingItems, setMissingItems] = useState<UpdateOrderItemStatusResponseModel | null>(null)
 
+<<<<<<< Updated upstream
     const { isLoading, mutateAsync } = useUpdateOrderItemMutation()
 
     const handleUpdateOrderItem = async () => {
         const res = await mutateAsync({ id: itemId, quantity })
         setMissingItems(res)
     }
+=======
+    const [open, setOpen] = useState(false);
+
+    // const { isLoading, mutate } = useUpdateOrderItemMutation()
+>>>>>>> Stashed changes
 
     return (
         <>
-            <Dialog >
+            <Dialog open={open} onOpenChange={setOpen}>
                 {children}
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
@@ -58,7 +64,11 @@ export function ModalUpdateProduct({ itemId, children }: Props) {
                         <p>{`Faltou ${missingItems.ExcessItems} item(s) para concluir um ou mais pedidos. E sobrou ${missingItems.ExcessItems} item(s)`}</p> : null }
                         <Button onClick={handleUpdateOrderItem}>Atualizar</Button>
                     <DialogFooter>
+<<<<<<< Updated upstream
                         
+=======
+                        <Button onClick={() => console.log("cliqueiii")}>Atualizar</Button>
+>>>>>>> Stashed changes
                     </DialogFooter>
                 </DialogContent>
             </Dialog >
