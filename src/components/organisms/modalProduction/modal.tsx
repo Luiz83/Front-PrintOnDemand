@@ -13,11 +13,22 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
     itemId: string
 }
 
+export type UpdateOrderItemStatusResponseModel = {
+    MissingItems: number
+    ExcessItems: number
+}
+
 export function ModalUpdateProduct({ itemId, children }: Props) {
 
     const [quantity, setQuantity] = useState("0")
+    const [missingItems, setMissingItems] = useState<UpdateOrderItemStatusResponseModel | null>(null)
 
-    const { isLoading, mutate } = useUpdateOrderItemMutation()
+    const { isLoading, mutateAsync } = useUpdateOrderItemMutation()
+
+    const handleUpdateOrderItem = async () => {
+        const res = await mutateAsync({ id: itemId, quantity })
+        setMissingItems(res)
+    }
 
     return (
         <>
@@ -43,8 +54,11 @@ export function ModalUpdateProduct({ itemId, children }: Props) {
                             />
                         </div>
                     </div>
+                    {missingItems ?
+                        <p>{`Faltou ${missingItems.ExcessItems} item(s) para concluir um ou mais pedidos. E sobrou ${missingItems.ExcessItems} item(s)`}</p> : null }
+                        <Button onClick={handleUpdateOrderItem}>Atualizar</Button>
                     <DialogFooter>
-                        <Button onClick={() => mutate({ id: itemId, quantity })}>Atualizar</Button>
+                        
                     </DialogFooter>
                 </DialogContent>
             </Dialog >
