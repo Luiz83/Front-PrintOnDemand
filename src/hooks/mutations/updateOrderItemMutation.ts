@@ -7,7 +7,10 @@ export function useUpdateOrderItemMutation() {
     const queryClient = useQueryClient()
 
     return useMutation(
-        (params: {id: string, quantity: string}) => axiosClient.put<UpdateOrderItemStatusResponseModel, null>('/Events/orderItems/update', null, { params }),
+        async (params: {id: string, quantity: string}) => {
+            const {data} = await axiosClient.put<UpdateOrderItemStatusResponseModel>('/Events/orderItems/update', null, { params })
+            return data
+        },
         {
             onSuccess: () => {
                 queryClient.invalidateQueries('items')

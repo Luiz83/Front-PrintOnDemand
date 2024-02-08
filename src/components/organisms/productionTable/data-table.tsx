@@ -46,6 +46,8 @@ export function ProductionTable<TData>({
 
     const [sorting, setSorting] = useState<SortingState>([])
 
+    const [openedCustomerProductId, setOpenedCustomerProductId] = useState<string | null>(null)
+
     const columnHelper = createColumnHelper<Items>();
 
     const columns = [
@@ -97,31 +99,29 @@ export function ProductionTable<TData>({
 
                 return (
                     <div className="flex justify-center">
-                        <ModalUpdateProduct itemId={item.customerProductId}>
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" className="h-8 w-8 p-0">
-                                        <span className="sr-only">Open menu</span>
-                                        <MoreHorizontal className="h-4 w-4" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem onClick={() => navigator.clipboard.writeText(item.referenceFileUrl)}>
-                                        Link do Gabarito
-                                        <Copy className="ml-2 h-4 w-4" />
-                                    </DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem onClick={() => mutate({id: item.customerProductId})}>Marcar em produção</DropdownMenuItem>
-                                    <DialogTrigger asChild>
-                                        <DropdownMenuItem>
-                                            Dar Baixa
-                                        </DropdownMenuItem>
-                                    </DialogTrigger>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </ModalUpdateProduct>
 
-                    </div>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" className="h-8 w-8 p-0">
+                                    <span className="sr-only">Open menu</span>
+                                    <MoreHorizontal className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuItem onClick={() => navigator.clipboard.writeText(item.referenceFileUrl)}>
+                                    Link do Gabarito
+                                    <Copy className="ml-2 h-4 w-4" />
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem onClick={() => mutate({ id: item.customerProductId })}>Marcar em produção</DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setOpenedCustomerProductId(item.customerProductId)}>
+                                    Dar Baixa
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
+
+                    </div >
                 )
             },
         }),
@@ -140,6 +140,9 @@ export function ProductionTable<TData>({
 
     return (
         <div>
+            {openedCustomerProductId && (
+                <ModalUpdateProduct itemId={openedCustomerProductId} open={!!openedCustomerProductId} onClose={() => setOpenedCustomerProductId(null)} />
+            )}
             <Table className="bg-background ">
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (

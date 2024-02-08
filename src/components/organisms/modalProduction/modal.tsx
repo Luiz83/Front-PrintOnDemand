@@ -1,39 +1,44 @@
 import { Button } from "@/app/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
-import { DropdownMenu } from "@/app/components/ui/dropdown-menu";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
-import axiosClient from "@/services/AxiosClient";
-import { useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
-import { Items } from "../productionTable/columns";
+import { useState, useRef } from "react";
 import { useUpdateOrderItemMutation } from "@/hooks/mutations/updateOrderItemMutation";
+import { Alert, AlertDescription, AlertTitle } from "@/app/components/ui/alert";
+import { Terminal } from "lucide-react";
+import { toast } from 'sonner'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
     itemId: string
+    open: boolean
+    onClose: () => void
 }
 
 export type UpdateOrderItemStatusResponseModel = {
-    MissingItems: number
-    ExcessItems: number
+    missingItems: number
+    excessItems: number
 }
 
-export function ModalUpdateProduct({ itemId, children }: Props) {
+export function ModalUpdateProduct({ itemId, children, open, onClose }: Props) {
 
     const [quantity, setQuantity] = useState("0")
-    const [missingItems, setMissingItems] = useState<UpdateOrderItemStatusResponseModel | null>(null)
     const { isLoading, mutateAsync } = useUpdateOrderItemMutation()
-    const [open, setOpen] = useState(false);
     const handleUpdateOrderItem = async () => {
         const res = await mutateAsync({ id: itemId, quantity })
-        setMissingItems(res)
+        if (res.excessItems == 0 && res.missingItems == 0)
+            return toast.success("Muito Bem!", {
+                description: "Itens baixados com sucesso",
+            })
+        toast.warning("Atenção!", {
+            description: `${res.missingItems} item(s) faltaram para completar um pedido.\n ${res.excessItems} item(s) está sobrando`,
+        })
     }
 
     return (
         <>
-            <Dialog open={open} onOpenChange={setOpen}>
+            <Dialog open={open}>
                 {children}
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[425px]" onClose={onClose}>
                     <DialogHeader>
                         <DialogTitle>Baixa de produto</DialogTitle>
                         <DialogDescription>
@@ -53,10 +58,8 @@ export function ModalUpdateProduct({ itemId, children }: Props) {
                             />
                         </div>
                     </div>
-                    {missingItems ?
-                        <p>{`Faltou ${missingItems.ExcessItems} item(s) para concluir um ou mais pedidos. E sobrou ${missingItems.ExcessItems} item(s)`}</p> : null}
                     <DialogFooter>
-                        <Button onClick={handleUpdateOrderItem}>Atualizar</Button>
+                        <Button onClick={handleUpdateOrderItem}>{isLoading ? "..." : "Atualizar"}</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog >
