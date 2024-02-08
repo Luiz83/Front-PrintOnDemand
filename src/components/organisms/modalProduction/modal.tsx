@@ -22,19 +22,12 @@ export function ModalUpdateProduct({ itemId, children }: Props) {
 
     const [quantity, setQuantity] = useState("0")
     const [missingItems, setMissingItems] = useState<UpdateOrderItemStatusResponseModel | null>(null)
-
-<<<<<<< Updated upstream
     const { isLoading, mutateAsync } = useUpdateOrderItemMutation()
-
+    const [open, setOpen] = useState(false);
     const handleUpdateOrderItem = async () => {
         const res = await mutateAsync({ id: itemId, quantity })
         setMissingItems(res)
     }
-=======
-    const [open, setOpen] = useState(false);
-
-    // const { isLoading, mutate } = useUpdateOrderItemMutation()
->>>>>>> Stashed changes
 
     return (
         <>
@@ -61,14 +54,9 @@ export function ModalUpdateProduct({ itemId, children }: Props) {
                         </div>
                     </div>
                     {missingItems ?
-                        <p>{`Faltou ${missingItems.ExcessItems} item(s) para concluir um ou mais pedidos. E sobrou ${missingItems.ExcessItems} item(s)`}</p> : null }
-                        <Button onClick={handleUpdateOrderItem}>Atualizar</Button>
+                        <p>{`Faltou ${missingItems.ExcessItems} item(s) para concluir um ou mais pedidos. E sobrou ${missingItems.ExcessItems} item(s)`}</p> : null}
                     <DialogFooter>
-<<<<<<< Updated upstream
-                        
-=======
-                        <Button onClick={() => console.log("cliqueiii")}>Atualizar</Button>
->>>>>>> Stashed changes
+                        <Button onClick={handleUpdateOrderItem}>Atualizar</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog >
