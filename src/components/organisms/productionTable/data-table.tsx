@@ -139,7 +139,7 @@ export function ProductionTable<TData>({
     })
 
     return (
-        <div>
+        <div className="pt-10">
             {openedCustomerProductId && (
                 <ModalUpdateProduct itemId={openedCustomerProductId} open={!!openedCustomerProductId} onClose={() => setOpenedCustomerProductId(null)} />
             )}
