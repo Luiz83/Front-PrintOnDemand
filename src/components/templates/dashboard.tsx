@@ -4,7 +4,7 @@ import axiosClient from "@/services/AxiosClient";
 import { useQuery } from "react-query";
 
 export function DashboardPage() {
-    const { data, isError, isLoading } = useQuery(['items'], () => axiosClient.get('/Events/report?date=17%2F01%2F2024').then((res) => res.data))
+    const { data, isLoading } = useQuery(['items'], () => axiosClient.get('/Events/report?date=17%2F01%2F2024').then((res) => res.data))
 
     return (
         <>
