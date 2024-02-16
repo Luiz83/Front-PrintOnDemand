@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import errorImg from "../../assets/img/error.png"
 
 export function DashboardPage() {
-    const { data, isError, isLoading } = useQuery(['items'], () => axiosClient.get('/Events/report?date=17%2F01%2F2024').then((res) => res.data), { refetchOnWindowFocus: false, retry: false })
+    const { data, isError, isLoading } = useQuery(['items'], () => axiosClient.get('Events/report').then((res) => res.data), { refetchOnWindowFocus: false, retry: false })
 
     return (
         <>
