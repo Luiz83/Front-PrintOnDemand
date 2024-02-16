@@ -37,7 +37,7 @@ export interface Items {
     referenceFileUrl: string
 }
 
-export function ProductionTable<TData>({
+export function ProductionTable({
     data,
 }: DataTableProps) {
 
