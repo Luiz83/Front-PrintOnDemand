@@ -22,11 +22,10 @@ import { Badge } from "@/app/components/ui/badge"
 import { MoreHorizontal, ArrowUpDown, Copy } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/app/components/ui/dropdown-menu"
 import { ModalUpdateProduct } from "../modalProduction/modal"
-import { DialogTrigger } from "@/app/components/ui/dialog"
 import { useState } from "react"
 import { useUpdateOrderItemStatusMutation } from "@/hooks/mutations/updateOrderItemStatusMutation"
 
-interface DataTableProps<TData> {
+interface DataTableProps {
     data: Items[]
 }
 
@@ -38,11 +37,11 @@ export interface Items {
     referenceFileUrl: string
 }
 
-export function ProductionTable<TData>({
+export function ProductionTable({
     data,
-}: DataTableProps<TData>) {
+}: DataTableProps) {
 
-    const { isLoading, mutate } = useUpdateOrderItemStatusMutation()
+    const {  mutate } = useUpdateOrderItemStatusMutation()
 
     const [sorting, setSorting] = useState<SortingState>([])
 

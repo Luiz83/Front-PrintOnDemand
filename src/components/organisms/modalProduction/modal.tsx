@@ -1,11 +1,9 @@
 import { Button } from "@/app/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/app/components/ui/dialog";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useUpdateOrderItemMutation } from "@/hooks/mutations/updateOrderItemMutation";
-import { Alert, AlertDescription, AlertTitle } from "@/app/components/ui/alert";
-import { Terminal } from "lucide-react";
 import { toast } from 'sonner'
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
