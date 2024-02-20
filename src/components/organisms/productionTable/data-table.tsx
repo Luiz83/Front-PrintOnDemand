@@ -24,24 +24,28 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { ModalUpdateProduct } from "../modalProduction/modal"
 import { useState } from "react"
 import { useUpdateOrderItemStatusMutation } from "@/hooks/mutations/updateOrderItemStatusMutation"
+import { Popover, PopoverContent, PopoverTrigger } from "@/app/components/ui/popover"
 
 interface DataTableProps {
     data: Items[]
 }
 
 export interface Items {
-    customerProductId: string
+    photoUrl: string,
+    productName: string,
+    customerProductId: string,
     customerProductName: string,
     totalQuantity: number,
-    status: string
-    referenceFileUrl: string
+    status: string,
+    referenceFileUrl: string,
+    
 }
 
 export function ProductionTable({
     data,
 }: DataTableProps) {
 
-    const {  mutate } = useUpdateOrderItemStatusMutation()
+    const { mutate } = useUpdateOrderItemStatusMutation()
 
     const [sorting, setSorting] = useState<SortingState>([])
 
@@ -51,7 +55,23 @@ export function ProductionTable({
 
     const columns = [
         columnHelper.accessor("customerProductId", {
-            header: "Produto"
+            header: "Produto",
+            cell: ({ row }) => {
+                const item = row.original
+
+                return (
+                    <>
+                        <Popover>
+                            <PopoverTrigger >
+                                <p className="text-center">{item.productName}</p>
+                            </PopoverTrigger>
+                            <PopoverContent>
+                                <img src={item.photoUrl}></img>
+                            </PopoverContent>
+                        </Popover>
+                    </>
+                )
+            }
         }),
         columnHelper.accessor("customerProductName", {
             header: "Variante"
